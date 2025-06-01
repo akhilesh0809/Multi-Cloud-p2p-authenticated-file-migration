@@ -19,12 +19,7 @@ const SHARED_PASSWORD_RAW = 'password123';
 
 // --- Middleware ---
 // THIS IS THE UPDATED CORS CONFIGURATION
-app.use(cors({
-    origin: 'https://cloudlink-a6.netlify.app', // <--- IMPORTANT: REPLACE THIS with your ACTUAL Netlify URL!
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
-    credentials: true // Allow cookies/auth headers to be sent
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
