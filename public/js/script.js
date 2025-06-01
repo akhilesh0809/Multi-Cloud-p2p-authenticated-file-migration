@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.querySelector('.contact-form');
 
     // --- Backend API Base URL ---
-    const API_BASE_URL = 'http://localhost:3000/api';
+    const API_BASE_URL = 'https://cloudlink-backend.onrender.com';
 
     // --- State Variable for Current User ---
     let loggedInUsername = localStorage.getItem('loggedInUsername');
