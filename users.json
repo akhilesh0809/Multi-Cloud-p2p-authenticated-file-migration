@@ -1,0 +1,14 @@
+{
+  "demo": {
+    "password": "$2b$10$2XxGMrpy30t38hm9LlL0mupQBzSY3hqJm0LD8WaajFDYILYArgKVW"
+  },
+  "akhilesh": {
+    "password": "$2b$10$xgI7FQWH3miSjf44sEYl9.4Bddr15MhQj8B4LQQypVb.rf0tqjAhS"
+  },
+  "demo1": {
+    "password": "$2b$10$HOEoLDQtAgJQkD8bTxS1/.QphRtHAzsJ9WET7jEk/3I46lzMFpfLe"
+  },
+  "demo2": {
+    "password": "$2b$10$r/G/8zMYmjg515TjFXWD8e5BjrCPFWmchzhRKgB9eBYnFj80jlFdy"
+  }
+}
