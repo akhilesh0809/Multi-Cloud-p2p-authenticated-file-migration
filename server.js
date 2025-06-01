@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
-const cors = require('cors');
+const cors = require('cors'); // This line is already here, keep it
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,7 +18,13 @@ const SHARED_USERNAME = 'demo';
 const SHARED_PASSWORD_RAW = 'password123';
 
 // --- Middleware ---
-app.use(cors());
+// THIS IS THE UPDATED CORS CONFIGURATION
+app.use(cors({
+    origin: 'https://cloudlink-a6.netlify.app', // <--- IMPORTANT: REPLACE THIS with your ACTUAL Netlify URL!
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+    credentials: true // Allow cookies/auth headers to be sent
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
