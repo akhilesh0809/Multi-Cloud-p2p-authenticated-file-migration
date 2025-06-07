@@ -1,14 +1,17 @@
 {
   "demo": {
-    "password": "$2b$10$2XxGMrpy30t38hm9LlL0mupQBzSY3hqJm0LD8WaajFDYILYArgKVW"
+    "password": "$2b$10$buz9q/IrluDPIufeIWWFIOg7SkkXw.8BBWHxeZmNyxdxUVj5v/MGa",
+    "email": "demo@example.com",
+    "mobile": ""
   },
   "akhilesh": {
-    "password": "$2b$10$xgI7FQWH3miSjf44sEYl9.4Bddr15MhQj8B4LQQypVb.rf0tqjAhS"
+    "password": "$2b$10$7YktbzD.T8bxXR2Ts2e5peQOcgO1i9e1/PWH6EAkGZW2BbWg..rOu",
+    "email": "yakhilesh0809@gmail.com",
+    "mobile": "6302092621"
   },
   "demo1": {
-    "password": "$2b$10$HOEoLDQtAgJQkD8bTxS1/.QphRtHAzsJ9WET7jEk/3I46lzMFpfLe"
-  },
-  "demo2": {
-    "password": "$2b$10$r/G/8zMYmjg515TjFXWD8e5BjrCPFWmchzhRKgB9eBYnFj80jlFdy"
+    "password": "$2b$10$Hhur.JqCPOTCLisivOBXdekhQ.TDIdzjsO7ZtAfK33ClXHvVxIWc2",
+    "email": "demo1@gmail.com",
+    "mobile": ""
   }
 }

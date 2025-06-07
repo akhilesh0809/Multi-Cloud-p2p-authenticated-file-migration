@@ -1,26 +1,10 @@
 [
   {
-    "id": "fileInput-1748784935656-27684514.jpeg",
-    "name": "1.jpeg",
-    "size": 12151,
-    "mimetype": "image/jpeg",
-    "uploadedAt": "2025-06-01T13:35:35.657Z",
-    "owner": "demo1"
-  },
-  {
-    "id": "fileInput-1748786781327-560128375.pdf",
-    "name": "Mini doc part 2.pdf",
-    "size": 2131288,
+    "id": "fileInput-1749295428585-566769237.pdf",
+    "name": "Atomic habits ( PDFDrive ).pdf",
+    "size": 5179036,
     "mimetype": "application/pdf",
-    "uploadedAt": "2025-06-01T14:06:22.070Z",
-    "owner": "demo1"
-  },
-  {
-    "id": "fileInput-1748787187506-859892966.jpeg",
-    "name": "IMG_20221110_200923.jpeg",
-    "size": 94017,
-    "mimetype": "image/jpeg",
-    "uploadedAt": "2025-06-01T14:13:07.553Z",
+    "uploadedAt": "2025-06-07T11:23:48.646Z",
     "owner": "demo1"
   }
 ]

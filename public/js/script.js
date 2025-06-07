@@ -46,9 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchFileSection = document.getElementById('searchFileSection');
     const searchInput = document.getElementById('searchInput');
     const searchResultsList = document.getElementById('searchResultsList');
+    // NEW: Filter and Sort Elements
+    const fileTypeFilter = document.getElementById('fileTypeFilter');
+    const sortBy = document.getElementById('sortBy');
 
     // NEW: Download Files section
     const downloadFilesSection = document.getElementById('downloadFilesSection');
+
+    // --- NEW: Transfer a Copy Feature DOM Elements ---
+    const transferCopySection = document.getElementById('transferCopySection');
+    const transferForm = document.getElementById('transferForm');
+    const fileToTransferSelect = document.getElementById('fileToTransfer');
+    const recipientEmailInput = document.getElementById('recipientEmail'); // Changed from recipientUsernameInput
+    const transferStatus = document.getElementById('transferStatus');
+    
 
 
     // --- DOM Elements from previous demo version (`j.js`) ---
@@ -148,12 +159,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const files = await response.json();
             allUserFiles = files; // This will now only contain files owned by the logged-in user
             renderFileLists(files);
-            renderSearchResults(files); // Initially show all logged-in user's files in search
+            handleSearchFiles(); // Initially show all logged-in user's files, now applying filters/sort by default
+            populateFileToTransferDropdown(files); // NEW: Populate transfer dropdown
         } catch (error) {
             console.error('Error fetching files:', error);
             uploadedFilesList.innerHTML = '<li style="color: red;">Error loading files.</li>';
             downloadableUserFilesList.innerHTML = '<li style="color: red;">Error loading files.</li>'; // NEW
             searchResultsList.innerHTML = '<li style="color: red;">Error loading files for search.</li>';
+            fileToTransferSelect.innerHTML = '<option value="">Error loading files</option>'; // NEW
         }
     }
 
@@ -179,8 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="file-details">${formatBytes(file.size)} | Uploaded: ${formattedUploadTime}</span>
                     </div>
                     <div class="file-actions">
-                        <button class="btn view-btn" data-id="${file.id}" data-name="${file.name}">View Document</button>
-                        <button class="btn delete-btn" data-id="${file.id}">Delete</button>
+                        <button class="btn view-btn" data-id="${file.id}" data-name="${file.name}"><i class="fas fa-eye"></i> Preview</button>
+                        <button class="btn delete-btn" data-id="${file.id}"><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
                 `;
                 uploadedFilesList.appendChild(ownerLi);
@@ -193,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="file-details">${formatBytes(file.size)} | Uploaded: ${formattedUploadTime}</span>
                     </div>
                     <div class="file-actions">
-                        <button class="btn view-btn" data-id="${file.id}" data-name="${file.name}">View Document</button>
-                        <button class="btn download-btn" data-file-id="${file.id}" data-file-name="${file.name}">Download</button>
+                        <button class="btn view-btn" data-id="${file.id}" data-name="${file.name}"><i class="fas fa-eye"></i> Preview</button>
+                        <button class="btn download-btn" data-file-id="${file.id}" data-file-name="${file.name}"><i class="fas fa-download"></i> Download</button>
                     </div>
                 `;
                 downloadableUserFilesList.appendChild(downloadLi); // NEW
@@ -223,13 +236,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="file-details">${formatBytes(file.size)} | Uploaded: ${formattedUploadTime} | Owner: ${file.owner}</span>
                 </div>
                 <div class="file-actions">
-                    <button class="btn view-btn" data-id="${file.id}" data-name="${file.name}">View Document</button>
-                    <button class="btn download-btn" data-file-id="${file.id}" data-file-name="${file.name}">Download</button>
+                    <button class="btn view-btn" data-id="${file.id}" data-name="${file.name}"><i class="fas fa-eye"></i> Preview</button>
+                    <button class="btn download-btn" data-file-id="${file.id}" data-file-name="${file.name}"><i class="fas fa-download"></i> Download</button>
                 </div>
             `;
             searchResultsList.appendChild(searchLi);
         });
         addFileListEventListeners(searchResultsList);
+    }
+
+    // NEW: Function to populate the file transfer dropdown
+    function populateFileToTransferDropdown(files) {
+        fileToTransferSelect.innerHTML = '<option value="">-- Select a file --</option>'; // Reset
+        files.forEach(file => {
+            const option = document.createElement('option');
+            option.value = file.id;
+            option.textContent = file.name;
+            fileToTransferSelect.appendChild(option);
+        });
     }
 
 
@@ -267,6 +291,15 @@ document.addEventListener('DOMContentLoaded', () => {
         registerMessage.textContent = '';
     }
 
+    // NEW: Function to display transfer status messages
+    function displayTransferMessage(message, isSuccess) {
+        transferStatus.textContent = message;
+        transferStatus.classList.remove('hidden', 'success', 'error');
+        transferStatus.classList.add(isSuccess ? 'success' : 'error');
+        setTimeout(() => transferStatus.classList.add('hidden'), 5000);
+    }
+
+
     function isValidEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
@@ -302,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // NEW: Download Files section
     // const downloadFilesSection = document.getElementById('downloadFilesSection'); // Already defined above
     // const searchFileSection = document.getElementById('searchFileSection'); // Already defined above
+    // const transferCopySection = document.getElementById('transferCopySection'); // Already defined above
 
 
     function hideAllDashboardPanels() {
@@ -309,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         viewFilesSection.classList.add('hidden');
         downloadFilesSection.classList.add('hidden'); // NEW
         searchFileSection.classList.add('hidden');
+        transferCopySection.classList.add('hidden'); // NEW
     }
 
     function displayLoggedInState() {
@@ -461,8 +496,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     switchToLoginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        showLoginForm();
+            e.preventDefault();
+            showLoginForm();
     });
 
     // Handle Login Form Submission
@@ -774,25 +809,169 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Search functionality
+    // NEW: Helper to determine file type group for filtering
+    function getFileTypeGroup(fileName) {
+        const fileNameLower = fileName.toLowerCase();
+        if (fileNameLower.endsWith('.pdf') || fileNameLower.endsWith('.doc') || fileNameLower.endsWith('.docx') || fileNameLower.endsWith('.txt')) {
+            return 'document';
+        } else if (fileNameLower.endsWith('.jpg') || fileNameLower.endsWith('.jpeg') || fileNameLower.endsWith('.png') || fileNameLower.endsWith('.gif')) {
+            return 'image';
+        } else if (fileNameLower.endsWith('.zip') || fileNameLower.endsWith('.rar')) {
+            return 'archive';
+        }
+        return 'other'; // For any other file types not explicitly listed
+    }
+
+    // Search functionality with filters and sorting
     searchInput.addEventListener('input', () => {
+        handleSearchFiles();
+    });
+
+    fileTypeFilter.addEventListener('change', () => {
+        handleSearchFiles();
+    });
+
+    sortBy.addEventListener('change', () => {
         handleSearchFiles();
     });
 
     function handleSearchFiles() {
         const searchTerm = searchInput.value.toLowerCase().trim();
-        let filteredFiles = [];
+        const selectedFileType = fileTypeFilter.value;
+        const selectedSortBy = sortBy.value;
 
-        if (searchTerm === '') {
-            filteredFiles = allUserFiles; // allUserFiles now only contains current user's files
-        } else {
-            filteredFiles = allUserFiles.filter(file =>
-                file.name.toLowerCase().includes(searchTerm)
-            );
-        }
+        let filteredFiles = allUserFiles.filter(file => {
+            const matchesSearchTerm = file.name.toLowerCase().includes(searchTerm);
+            const fileTypeMatchesFilter = selectedFileType === 'all' || getFileTypeGroup(file.name) === selectedFileType;
+            return matchesSearchTerm && fileTypeMatchesFilter;
+        });
+
+        // Sorting logic
+        filteredFiles.sort((a, b) => {
+            switch (selectedSortBy) {
+                case 'nameAsc':
+                    return a.name.localeCompare(b.name);
+                case 'nameDesc':
+                    return b.name.localeCompare(a.name);
+                case 'dateDesc':
+                    return new Date(b.uploadedAt) - new Date(a.uploadedAt);
+                case 'dateAsc':
+                    return new Date(a.uploadedAt) - new Date(b.uploadedAt);
+                case 'sizeDesc':
+                    return b.size - a.size;
+                case 'sizeAsc':
+                    return a.size - b.size;
+                default:
+                    return 0;
+            }
+        });
+
         renderSearchResults(filteredFiles);
     }
 
+    // NEW: Handle File Transfer Submission
+    transferForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        transferStatus.classList.add('hidden'); // Hide previous messages
+
+        if (!loggedInUsername) {
+            displayTransferMessage('You must be logged in to transfer files.', false);
+            return;
+        }
+
+        const fileId = fileToTransferSelect.value;
+        const recipientEmail = recipientEmailInput.value.trim(); // Changed from recipientUsername
+
+        if (!fileId) {
+            displayTransferMessage('Please select a file to transfer.', false);
+            return;
+        }
+        if (!recipientEmail) { // Changed from recipientUsername
+            displayTransferMessage('Please enter a recipient email.', false);
+            return;
+        }
+        if (!isValidEmail(recipientEmail)) {
+            displayTransferMessage('Please enter a valid recipient email address.', false);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/transfer-file`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-username': loggedInUsername
+                },
+                body: JSON.stringify({ fileId, recipientEmail }) // Changed recipientUsername to recipientEmail
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                displayTransferMessage(data.message, true);
+                transferForm.reset();
+            } else {
+                displayTransferMessage(data.message || 'File transfer failed. Please try again.', false);
+            }
+        } catch (error) {
+            console.error('Network error during file transfer:', error);
+            displayTransferMessage('Could not connect to the server for file transfer.', false);
+        }
+    });
+    //here//
+    const transferAllForm = document.getElementById('transferAllForm');
+    const allRecipientEmail = document.getElementById('allRecipientEmail');
+    const transferAllStatus = document.getElementById('transferAllStatus');
+
+    function displayTransferAllMessage(message, isSuccess) {
+        transferAllStatus.textContent = message;
+        transferAllStatus.classList.remove('hidden', 'success', 'error');
+        transferAllStatus.classList.add(isSuccess ? 'success' : 'error');
+        setTimeout(() => transferAllStatus.classList.add('hidden'), 5000);
+    }
+
+    transferAllForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const recipient = allRecipientEmail.value.trim();
+
+        if (!isValidEmail(recipient)) {
+            displayTransferAllMessage('Please enter a valid recipient email.', false);
+            return;
+        }
+
+        if (!allUserFiles.length) {
+            displayTransferAllMessage('You have no files to transfer.', false);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/transfer-multiple-files`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-username': loggedInUsername
+                },
+                body: JSON.stringify({
+                    recipientEmail: recipient,
+                    fileIds: allUserFiles.map(file => file.id)
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                displayTransferAllMessage(result.message, true);
+                transferAllForm.reset();
+            } else {
+                displayTransferAllMessage(result.message || 'Transfer failed.', false);
+            }
+        } catch (error) {
+            console.error('Error during bulk file transfer:', error);
+            displayTransferAllMessage('Network error. Try again later.', false);
+        }
+    });
+
+     //here//
 
     // --- Add event listeners for dashboard navigation links ---
     const dashboardNavLinks = document.querySelectorAll('.dashboard-nav a, .dashboard-nav button'); // Include buttons for logout
@@ -815,7 +994,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetPanel.classList.remove('hidden'); // Show the selected panel
                 if (targetId === '#searchFileSection') {
                     searchInput.value = '';
-                    renderSearchResults(allUserFiles);
+                    handleSearchFiles(); // Call handleSearchFiles to apply filters/sort on section load
+                } else if (targetId === '#transferCopySection') { // NEW: Handle transfer section
+                    transferForm.reset();
+                    transferStatus.classList.add('hidden');
+                    populateFileToTransferDropdown(allUserFiles); // Ensure dropdown is fresh
                 }
             }
         });
@@ -828,4 +1011,5 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         displayLoggedOutState();
     }
+    
 });

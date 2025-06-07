@@ -13,7 +13,12 @@
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mammoth": "^1.9.1",
     "multer": "^2.0.0",
+    "nodemailer": "^7.0.3",
+    "openai": "^5.1.1",
+    "pdf-parse": "^1.1.1",
     "uuid": "^11.1.0"
   }
 }

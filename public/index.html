@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seamless Cloud Migration - Effortless & Secure Data Transfer</title>
-    <link rel="icon" type="image/png" href="Favicon.png">
+    <link rel="icon" type="image/png" href="MainLogo.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
         <div class="container">
             <h1 class="logo">
                 <a href="#">
-                    <img src="Favicon.png" alt="CloudLink Logo" class="header-logo">
+                    <img src="MainLogo.png" alt="CloudLink Logo" class="header-logo">
                     CloudLink
                 </a>
             </h1>
@@ -170,9 +170,10 @@
                 <nav class="dashboard-nav">
                     <ul>
                         <li><a href="#uploadFileSection" class="btn btn-secondary">Upload File</a></li>
-                        <li><a href="#viewFilesSection" class="btn btn-secondary">View Uploaded Files</a></li>
+                        <li><a href="#viewFilesSection" class="btn btn-secondary">All Files</a></li>
                         <li><a href="#downloadFilesSection" class="btn btn-secondary">Download Files</a></li>
                         <li><a href="#searchFileSection" id="searchFileBtn" class="btn btn-secondary">Search File</a></li>
+                        <li><a href="#transferCopySection" class="btn btn-secondary">Transfer a Copy</a></li>
                         <li><button type="button" id="dashboardLogoutBtn" class="btn btn-outline">Logout</button></li>
                     </ul>
                 </nav>
@@ -198,7 +199,7 @@
                     </div>
 
                     <div id="viewFilesSection" class="dashboard-panel hidden">
-                        <h3>Your Uploaded Files</h3>
+                        <h3>All Files</h3>
                         <p>Here you can view, download, and delete files you've uploaded.</p>
                         <ul id="uploadedFilesList" class="file-list">
                             <li>Loading files...</li>
@@ -218,10 +219,66 @@
                         <div class="form-group search-group">
                             <input type="text" id="searchInput" placeholder="Search by file name..." class="search-input">
                         </div>
+
+                        <div class="filter-sort-row">
+                            <div class="form-group filter-type-group">
+                                <label for="fileTypeFilter">Filter by Type:</label>
+                                <select id="fileTypeFilter" class="form-control">
+                                    <option value="all">All Types</option>
+                                    <option value="document">Documents (.pdf, .doc, .docx, .txt)</option>
+                                    <option value="image">Images (.jpg, .jpeg, .png, .gif)</option>
+                                    <option value="archive">Archives (.zip, .rar)</option>
+                                    </select>
+                            </div>
+                            <div class="form-group sort-by-group">
+                                <label for="sortBy">Sort by:</label>
+                                <select id="sortBy" class="form-control">
+                                    <option value="nameAsc">Name (A-Z)</option>
+                                    <option value="nameDesc">Name (Z-A)</option>
+                                    <option value="dateDesc">Date Uploaded (Newest First)</option>
+                                    <option value="dateAsc">Date Uploaded (Oldest First)</option>
+                                    <option value="sizeDesc">Size (Largest First)</option>
+                                    <option value="sizeAsc">Size (Smallest First)</option>
+                                </select>
+                            </div>
+                        </div>
                         <ul id="searchResultsList" class="file-list">
                             <li class="no-files">Start typing to search your files.</li>
                         </ul>
                     </div>
+
+                            
+                    <div id="transferCopySection" class="dashboard-panel hidden">
+                    <h3>Transfer a Copy of Your File</h3>
+                    <p>Select a file from your uploaded files and transfer a copy to another user.</p>
+
+                    <form id="transferForm" class="transfer-form">
+                        <div class="form-group">
+                            <label for="fileToTransfer">Select File to Transfer:</label>
+                            <select id="fileToTransfer" required class="select-file">
+                                <option value="">-- Select a file --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipientEmail">Recipient Email:</label>
+                            <input type="email" id="recipientEmail" required placeholder="Enter recipient's email">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Transfer Copy</button>
+                        <p id="transferStatus" class="status-message hidden"></p>
+                    </form>
+
+                    <h3 style="margin-top: 40px;">Transfer All Files</h3>
+                    <p>Transfer all your uploaded files to another user by email.</p>
+                    <form id="transferAllForm" class="transfer-form">
+                        <div class="form-group">
+                            <label for="allRecipientEmail">Recipient Email:</label>
+                            <input type="email" id="allRecipientEmail" required placeholder="Enter recipient's email">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Transfer All Files</button>
+                        <p id="transferAllStatus" class="status-message hidden"></p>
+                    </form>
+                </div>
+
                 </div>
             </div>
         </section>
@@ -256,7 +313,7 @@
             <div class="social-links">
                 <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                 <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
+            </div>
         </div>
     </footer>
 

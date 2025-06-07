@@ -65,14 +65,17 @@ a:hover {
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     border: none;
     cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 .btn:hover {
-    background-color: #2980b9;
+    background: #325288;
+    color: #000000;
+    transform: scale(1.5);
 }
 
 .btn-primary {
@@ -95,28 +98,115 @@ a:hover {
 }
 
 .btn-secondary {
-    background-color: #556b82;
+    background-color: #6c757d;
     color: #fff;
 }
 
 .btn-secondary:hover {
-    background-color: #4a5c6e;
+    background-color: #5a6268;
 }
 
-.btn.disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    opacity: 0.7;
+/* Specific button styles for actions (delete, view, download) */
+.btn.delete-btn {
+    background-color: #e74c3c; /* Red for delete */
+    margin-left: 10px;
+}
+.btn.delete-btn:hover {
+    background-color: #c0392b;
 }
 
-.btn.disabled:hover {
-    background-color: #ccc;
+.btn.view-btn {
+    background-color: #2ecc71; /* Green for view */
+}
+.btn.view-btn:hover {
+    background-color: #27ae60;
+}
+
+.btn.download-btn {
+    background-color: #f39c12; /* Orange for download */
+    margin-left: 10px;
+}
+.btn.download-btn:hover {
+    background-color: #e67e22;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea,
+.form-group select { /* Added select for transfer form */
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { /* Added select */
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+    outline: none;
+}
+
+/* Specific styling for the new select input in transfer form */
+.transfer-form .select-file {
+    appearance: none; /* Remove default dropdown arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2069.6c-3.2-3.2-8.4-3.2-11.6%200L146.2%20202.8%2017.1%2069.6c-3.2-3.2-8.4-3.2-11.6%200-3.2%203.2-3.2%208.4%200%2011.6l135.7%20135.7c3.2%203.2%208.4%203.2%2011.6%200l135.7-135.7c3.2-3.2%203.2-8.4%200-11.6z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 10px;
+    padding-right: 35px; /* Make space for the custom arrow */
+    cursor: pointer;
+}
+
+
+/* Messages (Success/Error) */
+.status-message, .auth-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.status-message.success, .auth-message.success {
+    background-color: #d4edda;
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.status-message.error, .auth-message.error {
+    background-color: #f8d7da;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.hidden {
+    display: none !important;
 }
 
 
 /* Header */
 .main-header {
-    background-color: #2c3e50;
+    background-color: #96e2ec;
     color: #fff;
     padding: 20px 0;
     border-bottom: 5px solid #3499db88;
@@ -129,27 +219,37 @@ a:hover {
 }
 
 .logo {
-    font-size: 1.8em;
+    font-size: 1.8em; /* Keep font size for "CloudLink" text */
     font-weight: 700;
+    display: flex; /* Make logo and text align horizontally */
+    align-items: center; /* Vertically align them */
+    gap: 10px; /* Space between logo and text */
 }
 
 .logo a {
     color: #fff;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    height: 40px; /* Adjust as needed */
+    margin-right: 5px; /* Space between image and text */
 }
 
 .main-nav .nav-list {
     list-style: none;
     display: flex;
     gap: 25px;
+    font-size: 1.1em;
 }
 
 .main-nav .nav-list a {
-    display: none;
     color: #fff;
-    font-weight: 400;
     padding: 5px 0;
     position: relative;
+    transition: color 0.3s ease;
 }
 
 .main-nav .nav-list a::after {
@@ -159,23 +259,23 @@ a:hover {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #3498db;
-    transition: width 0.3s ease-in-out;
+    background-color: #fff;
+    transition: width 0.3s ease;
 }
 
-.main-nav .nav-list a:hover::after {
+.main-nav .nav-list a:hover::after,
+.main-nav .nav-list a.active::after {
     width: 100%;
 }
 
-/* Mobile menu toggle */
 .menu-toggle {
-    display: none;
+    display: none; /* Hidden on desktop */
     background: none;
     border: none;
     cursor: pointer;
     padding: 10px;
     position: relative;
-    z-index: 1000;
+    z-index: 1001; /* Ensure it's above other content */
 }
 
 .hamburger {
@@ -184,234 +284,178 @@ a:hover {
     height: 3px;
     background-color: #fff;
     margin: 5px 0;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
 }
-
-.menu-toggle.active .hamburger:nth-child(2) {
-    opacity: 0;
-}
-
-.menu-toggle.active .hamburger:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-}
-
-.menu-toggle.active .hamburger:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-}
-
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(rgba(240 164 240 / 60%), rgba(44 239 240 / 60%)), url('../images/hero-bg.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../hero-bg.jpg') no-repeat center center/cover;
     color: #fff;
     text-align: center;
-    padding: 100px 0;
-    min-height: 500px;
+    padding: 120px 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 70vh; /* Ensure it takes up a good portion of the viewport */
 }
 
-.hero-content {
-    max-width: 800px;
-}
-
-.hero-section h2 {
+.hero-content h2 {
     font-size: 3.5em;
     margin-bottom: 20px;
     color: #fff;
 }
 
-.hero-section p {
+.hero-content p {
     font-size: 1.3em;
     margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* Problem and Solution Sections */
-.problem-points,
-.solution-points {
-    display: flex;
-    justify-content: space-around;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.problem-points .point,
-.solution-points .point {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+/* Problem & Solution Sections */
+.problem-section, .solution-section {
     text-align: center;
-    flex: 1;
-    min-width: 280px;
+}
+
+.problem-points, .solution-points {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.problem-points .point, .solution-points .point {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    flex: 1 1 300px; /* Allows points to grow and shrink, with a base of 300px */
     max-width: 350px;
+    text-align: left;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.problem-points .point i,
-.solution-points .point i {
-    font-size: 3em;
-    color: #3498db;
-    margin-bottom: 20px;
+.problem-points .point:hover, .solution-points .point:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.problem-points .point:hover,
-.solution-points .point:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+.problem-points .point h3, .solution-points .point h3 {
+    font-size: 1.5em;
+    color: #3498db;
+    margin-bottom: 15px;
+    text-align: left; /* Align icon and text left */
+}
+
+.problem-points .point h3 i, .solution-points .point h3 i {
+    margin-right: 10px;
+    color: #2c3e50;
+}
+
+.problem-points .point p, .solution-points .point p {
+    font-size: 1em;
+    color: #666;
 }
 
 /* How It Works Section */
-.how-it-works-section .steps-container {
+.how-it-works-section {
+    text-align: center;
+}
+
+.steps-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 40px;
+    gap: 30px;
     margin-top: 40px;
     position: relative;
-    overflow: hidden;
-    padding-bottom: 60px;
+    padding-bottom: 60px; /* Space for navigation buttons */
 }
 
-.how-it-works-section .step {
+.step {
     background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    flex: 1 1 280px;
+    max-width: 320px;
     text-align: center;
-    min-width: 280px;
-    max-width: 350px;
-    flex-shrink: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    pointer-events: none;
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+    opacity: 0.4;
+    transform: scale(0.9);
 }
 
-.how-it-works-section .step.active {
+.step.active {
+    border-color: #3498db;
     opacity: 1;
-    pointer-events: auto;
-    position: static;
-    transform: translateX(0);
+    transform: scale(1);
 }
 
-.how-it-works-section .step h3 {
+.step h3 {
+    font-size: 1.6em;
     color: #3498db;
-    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.step p {
+    font-size: 1em;
+    color: #666;
 }
 
 .step-navigation {
-    text-align: center;
-    margin-top: 40px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
-
-.step-navigation button {
-    margin: 0 10px;
-}
-
 
 /* Authentication Section */
 .auth-container {
     display: flex;
     justify-content: center;
-    gap: 50px;
-    flex-wrap: wrap;
+    align-items: flex-start; /* Align panels to the top */
+    gap: 40px; /* Space between login and register panels */
+    flex-wrap: wrap; /* Allow panels to wrap on smaller screens */
 }
 
 .auth-panel {
     background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     width: 100%;
     max-width: 450px;
     text-align: center;
 }
 
+.auth-panel h3 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
 .auth-form .form-group {
-    margin-bottom: 20px;
     text-align: left;
 }
 
-.auth-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #555;
-}
-
-.auth-form input[type="text"],
-.auth-form input[type="password"],
-.auth-form input[type="email"],
-.auth-form input[type="tel"] {
+.auth-form .btn {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1em;
-    transition: border-color 0.3s ease;
-}
-
-.auth-form input[type="text"]:focus,
-.auth-form input[type="password"]:focus,
-.auth-form input[type="email"]:focus,
-.auth-form input[type="tel"]:focus {
-    border-color: #3498db;
-    outline: none;
-}
-
-.auth-form button {
-    width: 100%;
-    padding: 15px;
-    font-size: 1.2em;
-}
-
-.auth-message {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    color: #fff;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
-}
-
-.auth-message.success {
-    background-color: #27ae60;
-    opacity: 1;
-    max-height: 50px;
-}
-
-.auth-message.error {
-    background-color: #e74c3c;
-    opacity: 1;
-    max-height: 50px;
-}
-
-.auth-message.hidden {
-    display: none !important;
+    margin-top: 20px;
 }
 
 .auth-toggle-text {
-    margin-top: 20px;
-    font-size: 0.9em;
+    margin-top: 25px;
+    font-size: 0.95em;
     color: #777;
 }
 
 .auth-toggle-text a {
-    font-weight: bold;
+    font-weight: 700;
 }
 
-
-/* Dashboard Section Styling */
-#dashboardSection {
-    background-color: #f9f9f9;
-}
-
+/* Dashboard Section */
 .dashboard-header {
     text-align: center;
     margin-bottom: 40px;
@@ -425,21 +469,9 @@ a:hover {
     margin-bottom: 10px;
 }
 
-.dashboard-header span {
-    color: #3498db;
-}
-
 .dashboard-header p {
+    color: #555;
     font-size: 1.1em;
-    color: #666;
-}
-
-.dashboard-nav {
-    background-color: #fff;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    margin-bottom: 40px;
 }
 
 .dashboard-nav ul {
@@ -448,64 +480,84 @@ a:hover {
     justify-content: center;
     flex-wrap: wrap;
     gap: 15px;
+    margin-bottom: 40px;
+    padding: 15px;
+    background-color: #ecf0f1;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-.dashboard-nav li {
-    flex-grow: 1;
-    min-width: 150px;
-    max-width: 200px;
-}
-
-.dashboard-nav a,
-.dashboard-nav button {
-    width: 100%;
+.dashboard-nav li a, .dashboard-nav li button {
+    font-size: 0.95em;
+    padding: 10px 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    display: block; /* Make the whole button clickable area */
     text-align: center;
-    display: block;
-    padding: 12px 15px;
-    font-size: 1em;
 }
+
+.dashboard-nav li .btn-outline {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+.dashboard-nav li .btn-outline:hover {
+    background-color: #6c757d;
+    color: #fff;
+}
+
 
 .dashboard-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .dashboard-panel {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    width: 100%;
+    /* Keep padding and styles from .dashboard-content for consistency */
+    /* Remove redundant background-color/box-shadow if inheriting from dashboard-content */
 }
 
 .dashboard-panel h3 {
+    text-align: left;
     margin-bottom: 20px;
+    color: #3498db;
     font-size: 1.8em;
-    color: #2c3e50;
+}
+
+.dashboard-panel p {
+    color: #666;
+    margin-bottom: 25px;
 }
 
 /* Upload Form Specifics */
 .upload-form {
-    text-align: center;
-}
-
-.upload-form .form-group {
-    text-align: center;
-    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    background-color: #fcfcfc;
 }
 
 .file-input-label {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     background-color: #3498db;
     color: #fff;
     padding: 12px 25px;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 600;
     transition: background-color 0.3s ease;
-    font-size: 1.1em;
-    margin-bottom: 10px;
 }
 
 .file-input-label:hover {
@@ -517,107 +569,66 @@ a:hover {
     font-size: 1.2em;
 }
 
-.file-input-hidden {
-    display: none;
-}
-
 #selectedFileName {
-    display: block;
-    margin-top: 10px;
+    margin-left: 10px;
     font-style: italic;
-    color: #666;
+    color: #555;
 }
 
 .progress-container {
-    text-align: center;
-    margin: 20px 0;
+    width: 80%;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #uploadProgressBar {
-    width: 80%;
-    height: 20px;
-    -webkit-appearance: none;
-    appearance: none;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 10px;
+    flex-grow: 1;
+    height: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #e0e0e0;
 }
 
 #uploadProgressBar::-webkit-progress-bar {
     background-color: #e0e0e0;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 #uploadProgressBar::-webkit-progress-value {
-    background-color: #2ecc71;
-    border-radius: 10px;
-    transition: width 0.4s ease;
+    background-color: #2ecc71; /* Green progress */
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
 }
 
 #uploadProgressBar::-moz-progress-bar {
     background-color: #2ecc71;
-    border-radius: 10px;
-    transition: width 0.4s ease;
+    border-radius: 5px;
 }
 
 #uploadProgressText {
-    font-weight: bold;
+    font-weight: 600;
     color: #333;
 }
 
-/* Status Messages (Upload, Login, Register) */
-.status-message {
-    padding: 10px 15px;
-    border-radius: 5px;
-    margin-top: 20px;
-    font-weight: bold;
-    text-align: center;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
-}
-
-.status-message.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    opacity: 1;
-    max-height: 60px;
-}
-
-.status-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    opacity: 1;
-    max-height: 60px;
-}
-
-.status-message.hidden {
-    display: none !important;
-}
-
-
-/* File List Styling */
+/* File List & Search Results */
 .file-list {
     list-style: none;
     padding: 0;
 }
 
 .file-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f0f4f7;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 15px;
-    font-size: 1.1em;
-    color: #555;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px; /* Space between info and actions */
 }
 
 .file-list .file-info {
@@ -627,9 +638,9 @@ a:hover {
 }
 
 .file-list .file-name-display {
-    font-weight: bold;
-    color: #333;
-    word-break: break-word;
+    font-weight: 600;
+    color: #34495e;
+    font-size: 1.1em;
 }
 
 .file-list .file-name-display i {
@@ -640,106 +651,84 @@ a:hover {
 .file-list .file-details {
     font-size: 0.9em;
     color: #777;
-}
-
-.file-list .file-owner {
-    font-style: italic;
-    margin-left: 10px;
-    color: #555;
+    margin-top: 5px;
 }
 
 .file-list .file-actions {
     display: flex;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.file-list .btn {
-    padding: 8px 15px;
-    font-size: 0.9em;
-    white-space: nowrap;
-}
-
-.delete-btn {
-    background-color: #e74c3c;
-}
-
-.delete-btn:hover {
-    background-color: #c0392b;
-}
-
-.download-btn {
-    background-color: #28a745;
-}
-
-.download-btn:hover {
-    background-color: #218838;
+    gap: 8px;
 }
 
 .file-list .no-files {
     text-align: center;
+    color: #888;
     font-style: italic;
-    color: #777;
     padding: 20px;
     background-color: #f0f0f0;
-    border-radius: 5px;
+}
+
+/* Search specific styles */
+.search-group {
+    margin-bottom: 30px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 25px; /* Rounded corners for search */
+    font-size: 1.1em;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+    outline: none;
 }
 
 
+/* NEW: Transfer Form Specifics */
+.transfer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+.transfer-form .form-group {
+    margin-bottom: 0; /* Override default form-group margin */
+}
+
+.transfer-form .btn-primary {
+    margin-top: 10px;
+    align-self: flex-start; /* Align button to the left */
+}
+
 /* Contact Section */
-.contact-section .container {
+.contact-section {
     text-align: center;
 }
 
 .contact-form {
     max-width: 600px;
-    margin: 30px auto 0;
+    margin: 0 auto;
     background-color: #fff;
     padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: left;
 }
 
-.contact-form .form-group {
-    margin-bottom: 20px;
-}
-
-.contact-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #555;
-}
-
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1em;
-    transition: border-color 0.3s ease;
-}
-
-.contact-form input[type="text"]:focus,
-.contact-form input[type="email"]:focus,
-.contact-form textarea:focus {
-    border-color: #3498db;
-    outline: none;
-}
-
-.contact-form textarea {
-    resize: vertical;
-}
-
-.contact-form button {
-    width: 100%;
-    padding: 15px;
-    font-size: 1.2em;
+.contact-form .btn-primary {
+    width: auto; /* Override general button width */
     margin-top: 20px;
 }
+
 
 /* Footer */
 .main-footer {
@@ -769,110 +758,46 @@ a:hover {
 }
 
 
-/* Utility Classes */
-.hidden {
-    display: none !important;
-}
-
-/* Search Bar Improvements */
-.search-group {
-    margin-bottom: 30px; /* More space below search bar */
-    padding: 15px 0; /* Add some vertical padding */
-    text-align: center; /* Center the input within its group */
-}
-
-.search-input {
-    width: 100%;
-    max-width: 500px; /* Limit max width for better aesthetics on large screens */
-    padding: 14px 20px; /* Increased padding */
-    border: 2px solid #ccc; /* Slightly darker border */
-    border-radius: 30px; /* More rounded corners */
-    font-size: 1.1em; /* Larger font size */
-    color: #333; /* Default text color */
-    background-color: #fcfcfc; /* Light background for the input */
-    transition: all 0.3s ease; /* Smooth transitions for focus and hover */
-    outline: none; /* Remove default outline */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
-}
-
-.search-input:focus {
-    border-color: #3498db; /* Blue border on focus */
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Light blue glow on focus */
-    background-color: #fff; /* White background on focus */
-}
-
-/* Placeholder styling */
-.search-input::placeholder {
-    color: #999; /* Lighter color for placeholder */
-    font-style: italic;
-}
-
-
-/* Media Queries for Responsiveness */
+/* Responsive Design */
 @media (max-width: 768px) {
+    .main-nav {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     .main-nav .nav-list {
+        display: none;
         flex-direction: column;
-        background-color: #2c3e50;
-        position: absolute;
-        top: 60px;
-        right: 0;
         width: 100%;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-        z-index: 999;
-        padding: 0;
+        background-color: #96e2ec;
+        position: absolute;
+        top: 70px; /* Below header */
+        left: 0;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        gap: 10px;
     }
 
     .main-nav .nav-list.active {
-        max-height: 300px;
-        border-top: 1px solid #3499db88;
-        padding-bottom: 20px;
-    }
-
-    .main-nav .nav-list li {
-        text-align: center;
-        padding: 10px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .main-nav .nav-list li:last-child {
-        border-bottom: none;
-    }
-
-    .main-nav .nav-list a {
-        padding: 10px 20px;
-        display: block;
+        display: flex;
     }
 
     .menu-toggle {
-        display: block;
+        display: block; /* Show hamburger menu */
     }
 
-    .hero-section h2 {
-        font-size: 2.8em;
+    .hero-content h2 {
+        font-size: 2.5em;
     }
 
-    .problem-points,
-    .solution-points {
+    .hero-content p {
+        font-size: 1.1em;
+    }
+
+    .problem-points, .solution-points {
         flex-direction: column;
         align-items: center;
-    }
-
-    .problem-points .point,
-    .solution-points .point {
-        width: 90%;
-        max-width: 400px;
-    }
-
-    .how-it-works-section .steps-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .how-it-works-section .step {
-        width: 90%;
-        max-width: 400px;
     }
 
     .auth-container {
@@ -881,78 +806,26 @@ a:hover {
     }
 
     .auth-panel {
-        max-width: 90%;
+        padding: 30px;
+        width: 90%;
     }
 
-    /* Dashboard responsive adjustments */
     .dashboard-nav ul {
         flex-direction: column;
-        align-items: center;
+        gap: 10px;
     }
-
     .dashboard-nav li {
-        width: 90%;
-        max-width: 300px;
-    }
-
-    .dashboard-nav a,
-    .dashboard-nav button {
-        padding: 15px;
-    }
-
-    .dashboard-content {
-        grid-template-columns: 1fr;
-    }
-
-    .file-list li {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 15px;
-    }
-
-    .file-list .file-actions {
         width: 100%;
-        justify-content: flex-start;
-        gap: 10px;
+    }
+    .dashboard-nav li a, .dashboard-nav li button {
+        width: 100%;
+        text-align: center;
+        padding: 10px 15px;
     }
 
-    .file-list .btn {
-        flex-grow: 1;
-    }
-
-    .search-input {
-        padding: 12px 18px; /* Adjust padding for smaller screens */
-        font-size: 1em; /* Adjust font size */
-    }
-}
-
-@media (max-width: 480px) {
-    h2 {
-        font-size: 2em;
-    }
-    h3 {
-        font-size: 1.7em;
-    }
-
-    .hero-section h2 {
-        font-size: 2em;
-    }
-
-    .hero-section p {
-        font-size: 1em;
-    }
-
-    .btn {
-        padding: 8px 15px;
-        font-size: 1em;
-    }
-
-    /* File list adjustments for very small screens */
     .file-list li {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
         padding: 12px;
     }
     .file-list .file-name-display {
@@ -978,40 +851,220 @@ a:hover {
         font-size: 0.95em; /* Further adjust font size */
     }
 }
-/* Header */
+/* Add this to your style.css */
+
+/* For the search filter and sort section */
+.filter-sort-row {
+    display: flex; /* Use flexbox */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    gap: 20px; /* Space between the two columns */
+    margin-bottom: 20px; /* Space below this row */
+    justify-content: space-between; /* Distribute space between items */
+    align-items: flex-end; /* Align items to the bottom if they have different heights */
+}
+
+.filter-sort-row .form-group {
+    flex: 1; /* Allow each form group to take equal space */
+    min-width: 250px; /* Ensure they don't get too small on narrow screens */
+    margin-bottom: 0; /* Remove default margin from form-group if it causes issues */
+}
+
+/* Adjustments for dropdowns inside these groups */
+.filter-sort-row select.form-control {
+    width: 100%; /* Make dropdowns take full width of their column */
+}
+
+/* Optional: Adjustments for smaller screens */
+@media (max-width: 600px) {
+    .filter-sort-row {
+        flex-direction: column; /* Stack them vertically on very small screens */
+        gap: 15px; /* Adjust gap for vertical stacking */
+    }
+    .filter-sort-row .form-group {
+        min-width: unset; /* Remove min-width when stacked */
+    }
+}
+
+/* Existing styles for form-group (ensure they don't conflict) */
+.form-group {
+    margin-bottom: 15px; /* You might need to adjust this based on your overall form styling */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+/* ===== Custom Theme: ColorHunt Palette ===== */
+:root {
+    --primary: #24A19C;
+    --light-bg: #FAEEE7;
+    --deep-blue: #325288;
+    --accent-pink: #D96098;
+    --text-dark: #1f2a40;
+    --text-light: #ffffff;
+}
+
+/* Global Adjustments */
+body {
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    font-family: 'Roboto', sans-serif;
+    transition: background 0.5s ease;
+}
+
+a {
+    color: var(--deep-blue);
+}
+a:hover {
+    color: var(--primary);
+}
+
+/* Header & Footer */
 .main-header {
-    background-color: #96e2ec;
-    color: #fff;
-    padding: 20px 0;
-    border-bottom: 5px solid #3499db88;
+    background-color: var(--deep-blue);
+    color: var(--text-light);
+    border-bottom: 4px solid var(--primary);
 }
 
-.main-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.main-footer {
+    background-color: var(--deep-blue);
+    color: var(--text-light);
 }
 
-.logo {
-    font-size: 1.8em; /* Keep font size for "CloudLink" text */
-    font-weight: 700;
-    display: flex; /* Make logo and text align horizontally */
-    align-items: center; /* Vertically align them */
-    gap: 10px; /* Space between logo and text */
+/* Buttons */
+.btn {
+    background: var(--primary);
+    color: var(--text-light);
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background 0.4s ease, transform 0.3s ease;
 }
 
-.logo a {
-    color: #fff;
-    text-decoration: none;
-    display: flex; /* Ensure the link itself is also a flex container */
-    align-items: center;
-    gap: 10px; /* Ensure gap applies here if needed, though parent .logo handles it */
+.btn:hover {
+    background: var(--deep-blue);
+    transform: scale(1.03);
 }
 
-.header-logo {
-    height: 40px; /* Adjust height as needed */
-    width: auto; /* Maintain aspect ratio */
-    vertical-align: middle; /* Align with text */
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+.btn-outline:hover {
+    background: var(--primary);
+    color: var(--text-light);
 }
 
-/* ... rest of your existing header and other styles ... */
+.btn-secondary {
+    background-color: var(--accent-pink);
+    color: var(--text-light);
+}
+.btn-secondary:hover {
+    background-color: #b9477b;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(to right, var(--deep-blue), var(--primary));
+    color: var(--text-light);
+    animation: fadeSlideIn 1s ease-in-out;
+}
+
+.hero-content h2, .hero-content p {
+    animation: fadeSlideUp 1s ease forwards;
+}
+
+/* Section Titles */
+h2, h3 {
+    color: var(--deep-blue);
+    position: relative;
+    animation: fadeIn 0.8s ease-in;
+}
+
+/* Cards (Points and Steps) */
+.point, .step {
+    border-left: 5px solid var(--primary);
+    background-color: #ffffff;
+    animation: fadeInUp 0.8s ease;
+}
+
+/* Forms */
+input, select, textarea {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(36, 161, 156, 0.3);
+}
+
+/* File list */
+.file-list li {
+    background-color: #ffffff;
+    border-left: 4px solid var(--accent-pink);
+    transition: transform 0.3s ease;
+}
+.file-list li:hover {
+    transform: scale(1.01);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeSlideIn {
+    0% {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeSlideUp {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
