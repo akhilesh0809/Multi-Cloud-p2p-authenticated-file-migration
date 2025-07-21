@@ -306,7 +306,6 @@ app.post('/api/transfer-multiple-files', authenticateUser, async (req, res) => {
             break;
         }
     }
-
     if (!recipientUsername) return res.status(404).json({ message: 'Recipient not found.' });
     if (recipientUsername === senderUsername) return res.status(400).json({ message: 'Cannot transfer to yourself.' });
 

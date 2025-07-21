@@ -13,5 +13,15 @@
     "password": "$2b$10$Hhur.JqCPOTCLisivOBXdekhQ.TDIdzjsO7ZtAfK33ClXHvVxIWc2",
     "email": "demo1@gmail.com",
     "mobile": ""
+  },
+  "projectDemo": {
+    "password": "$2b$10$XKxDSuvJoItCE9AxvH0C/OPrb74RKK9YiSu29JVpo3ZoQZoIRFdzu",
+    "email": "abc@gmail.com",
+    "mobile": ""
+  },
+  "akhilesh123": {
+    "password": "$2b$10$qzJ/izZnfLhxMa9MOYOp6uGOCfYdEcnHgqFleft1IDkYQaJ3v2WLu",
+    "email": "abcd@gmail.com",
+    "mobile": ""
   }
 }

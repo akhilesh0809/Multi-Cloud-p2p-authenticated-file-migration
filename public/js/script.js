@@ -81,7 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.querySelector('.contact-form');
 
     // --- Backend API Base URL ---
-    const API_BASE_URL = 'http://localhost:3000/api';
+    // const API_BASE_URL = 'http://localhost:3000/api';
+    const API_BASE_URL = 'https://multi-cloud-p2p-authenticated-file.onrender.com/api';
+    // const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
+
+
 
     // --- State Variable for Current User ---
     let loggedInUsername = localStorage.getItem('loggedInUsername');
@@ -173,9 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderFileLists(files) {
         uploadedFilesList.innerHTML = '';
         downloadableUserFilesList.innerHTML = ''; // Clear the new download list
-
         const ownedFiles = files.filter(file => file.owner === loggedInUsername); // This will always be true now
-
         if (ownedFiles.length === 0) {
             uploadedFilesList.innerHTML = '<li class="no-files">No files uploaded by you yet.</li>';
             downloadableUserFilesList.innerHTML = '<li class="no-files">No files available for download.</li>'; // NEW
@@ -183,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ownedFiles.forEach(file => {
                 const fileIconClass = getFileIconClass(file.name);
                 const formattedUploadTime = file.uploadedAt ? formatTimestamp(file.uploadedAt) : 'N/A';
-
                 // For Your Uploaded Files section (with Delete and View)
                 const ownerLi = document.createElement('li');
                 ownerLi.innerHTML = `
@@ -197,7 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
                 uploadedFilesList.appendChild(ownerLi);
-
                 // For NEW Download Files section (with Download and View)
                 const downloadLi = document.createElement('li');
                 downloadLi.innerHTML = `

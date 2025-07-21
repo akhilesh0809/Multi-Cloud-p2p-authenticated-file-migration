@@ -1,0 +1,42 @@
+[
+  {
+    "id": "fileInput-1751044669864-611310894.pdf",
+    "name": "PROJECT .pdf",
+    "size": 1764299,
+    "mimetype": "application/pdf",
+    "uploadedAt": "2025-06-27T17:17:49.891Z",
+    "owner": "projectDemo"
+  },
+  {
+    "id": "fileInput-1751044708072-77355810.pdf",
+    "name": "Match Report - Jobscan.pdf",
+    "size": 154334,
+    "mimetype": "application/pdf",
+    "uploadedAt": "2025-06-27T17:18:28.080Z",
+    "owner": "projectDemo"
+  },
+  {
+    "id": "fileInput-1751203100383-251234058.zip",
+    "name": "diabetes.zip",
+    "size": 12637743,
+    "mimetype": "application/zip",
+    "uploadedAt": "2025-06-29T13:18:20.867Z",
+    "owner": "projectDemo"
+  },
+  {
+    "id": "fileInput-1751203132775-864636443.docx",
+    "name": "Cortexa_DOCUMENTATION[1].docx",
+    "size": 1387279,
+    "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "uploadedAt": "2025-06-29T13:18:53.490Z",
+    "owner": "projectDemo"
+  },
+  {
+    "id": "fileInput-1751209280549-26139817.jpeg",
+    "name": "bird.jpeg",
+    "size": 6373,
+    "mimetype": "image/jpeg",
+    "uploadedAt": "2025-06-29T15:01:20.555Z",
+    "owner": "projectDemo"
+  }
+]
